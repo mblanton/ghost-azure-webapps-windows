@@ -65,6 +65,13 @@ _private.loadNconf = function loadNconf(options) {
      */
     nconf.set('env', env);
 
+    // Azure
+    // If we find the Azure enivronment variables, set configuration for Azure Web Apps
+    if(process.env.WEBSITE_HOSTNAME) {
+        var azureConfig = require('./azure');
+        azureConfig(nconf);
+    }
+
     // Wrap this in a check, because else nconf.get() is executed unnecessarily
     // To output this, use DEBUG=ghost:*,ghost-config
     if (_debug.enabled('ghost-config')) {
